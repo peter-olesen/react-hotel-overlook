@@ -1,0 +1,17 @@
+@use "../../style/variables" as *;
+
+.Header {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background: $blk;
+  padding: 1rem 0;
+  color: $wht;
+
+  .Container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 1200px;
+  }
+}

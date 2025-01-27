@@ -1,0 +1,9 @@
+// Import local font
+@font-face {
+  font-family: "FontName";
+  src: url("../../public/FontName.otf");
+}
+
+%FontName {
+  font-family: "FontName", sans-serif;
+}

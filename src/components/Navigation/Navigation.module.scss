@@ -1,0 +1,36 @@
+@use "../../style/variables" as *;
+
+.Navigation {
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  color: $wht;
+
+  .TopNavigation {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    padding: 0;
+    gap: 2rem;
+    margin: 0;
+
+    li {
+      border-right: 1px $wht solid;
+      padding-right: 2rem;
+      font-weight: bold;
+
+      a {
+        color: $wht;
+        text-decoration: none;
+      }
+
+      &:last-child {
+        border-right: none;
+
+        a {
+          padding-right: 0;
+        }
+      }
+    }
+  }
+}

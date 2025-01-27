@@ -1,0 +1,8 @@
+@use "../../style/variables" as *;
+
+.Breadcrumbs {
+  font-size: 14px;
+  font-weight: 600;
+  color: $darkergray;
+  margin-top: 2rem;
+}
