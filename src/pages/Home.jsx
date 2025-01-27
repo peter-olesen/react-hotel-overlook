@@ -19,10 +19,10 @@ export const Home = () => {
         <CardSection title="Sidste nyt">
           {news?.map((item) => {
             let imgPath = `./assets/images`;
-            let imageSrc = item?.image?.filename;
+            let imgSrc = item?.image?.filename;
             return (
               <Card
-                imgSrc={`${imgPath}/${imageSrc}`}
+                imgSrc={`${imgPath}/${imgSrc}`}
                 title={item.title}
                 path="/"
               />
