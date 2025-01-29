@@ -7,7 +7,7 @@ import { Section } from "../components/Section/Section";
 import s from "../style/pages/Signup.module.scss";
 
 export const Signup = () => {
-  const [loginMessage, setLoginMessage] = useState("");
+  const [message, setMessage] = useState("");
   const [error, setError] = useState(null);
 
   const { setUserData } = useContext(UserContext);
@@ -20,23 +20,26 @@ export const Signup = () => {
 
   const onSubmit = (data) => {
     let urlencoded = new URLSearchParams();
-    urlencoded.append("username", data.username);
+    urlencoded.append("firstname", data.firstname);
+    urlencoded.append("lastname", data.lastname);
+    urlencoded.append("email", data.email);
     urlencoded.append("password", data.password);
+    urlencoded.append("is_active", 1);
+    urlencoded.append("org_id", 1);
+    urlencoded.append("refresh_token", 1234);
+    urlencoded.append("groups", 1);
+
+    console.log(data);
 
     const options = {
       method: "POST",
       body: urlencoded,
     };
 
-    fetch("http://localhost:4000/login", options)
+    fetch("http://localhost:4000/users", options)
       .then((res) => res.json())
       .then((data) => {
-        if (data.access_token) {
-          setUserData(data);
-          setLoginMessage("Du er nu logget ind");
-        } else {
-          setLoginMessage("Dit login er forkert");
-        }
+        setMessage("Du er nu oprettet på siden.");
       })
       .catch((error) => {
         console.error("Der opstod en fejl", error);
@@ -55,8 +58,8 @@ export const Signup = () => {
             <input
               type="email"
               autoComplete="email"
-              placeholder="Brugernavn"
-              {...register("username", {
+              placeholder="E-mail"
+              {...register("email", {
                 required: "E-mailen er nødvendig.",
                 pattern: {
                   value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
@@ -64,8 +67,17 @@ export const Signup = () => {
                 },
               })}
             />
+            <input
+              type="text"
+              placeholder="First name"
+              {...register("firstname", { required: true, maxLength: 80 })}
+            />
+            <input
+              type="text"
+              placeholder="Last name"
+              {...register("lastname", { required: true, maxLength: 100 })}
+            />
             {errors.username && <p>{errors.username.message}</p>}
-
             <input
               type="password"
               autoComplete="current-password"
@@ -81,15 +93,12 @@ export const Signup = () => {
             {errors.password && <p>{errors.password.message}</p>}
 
             <div className={s.Buttons}>
-              <input type="submit" className={s.Button} value="Login" />
-              <button onClick={(e) => createUserForm()} className={s.Button}>
-                Opret bruger
-              </button>
+              <input type="submit" className={s.Button} value="Opret bruger" />
             </div>
           </form>
         </div>
 
-        {loginMessage && <p>{loginMessage}</p>}
+        {message && <p>{message}</p>}
         {error && <p className="error">{error}</p>}
       </Section>
     </Main>

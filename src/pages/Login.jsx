@@ -5,6 +5,7 @@ import { UserContext } from "../context/UserContext";
 import { Main } from "../components/Main/Main";
 import { Section } from "../components/Section/Section";
 import s from "../style/pages/Login.module.scss";
+import { NavLink } from "react-router-dom";
 
 export const Login = () => {
   const [loginMessage, setLoginMessage] = useState("");
@@ -48,6 +49,7 @@ export const Login = () => {
     <Main sidebar={true}>
       <Section title="Login" className={s.Login}>
         <p>Indtast dit brugernavn og adgangskode for at logge ind</p>
+
         <div id="formDiv">
           <form onSubmit={handleSubmit(onSubmit)}>
             <input
@@ -80,15 +82,14 @@ export const Login = () => {
 
             <div className={s.Buttons}>
               <input type="submit" className={s.Button} value="Login" />
-              <button onClick={(e) => createUserForm()} className={s.Button}>
-                Opret bruger
-              </button>
             </div>
           </form>
         </div>
 
         {loginMessage && <p>{loginMessage}</p>}
         {error && <p className="error">{error}</p>}
+        <br />
+        <NavLink to="/signup">Opret bruger</NavLink>
       </Section>
     </Main>
   );
