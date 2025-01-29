@@ -1,0 +1,12 @@
+.CountrySwitcher {
+  ul {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .isActive {
+    color: red;
+  }
+}

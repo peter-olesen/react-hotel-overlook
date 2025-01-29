@@ -1,7 +1,11 @@
 .Main {
   display: flex;
   flex-direction: column;
-  // justify-content: center;
-  // align-items: center;
+  width: 1200px;
+}
+
+.MainSidebar {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
   width: 1200px;
 }
