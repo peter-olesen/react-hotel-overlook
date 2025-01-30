@@ -35,7 +35,7 @@ export const Country = () => {
                   key={item.id}
                   imgSrc={`${imgPath}/${imgSrc}`}
                   title={item.name}
-                  path="/"
+                  path={`/city/${item.slug}`}
                 />
               );
             })}

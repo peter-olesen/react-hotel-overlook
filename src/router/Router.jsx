@@ -6,11 +6,14 @@ import { Layout } from "../layouts/Layout";
 import { Home } from "../pages/Home";
 import { PageNotFound } from "../pages/PageNotFound";
 import { Hotels } from "../pages/Hotels";
+import { Country } from "../pages/Country";
+import { City } from "../pages/City";
+import { Hotel } from "../pages/Hotel";
 import { Rooms } from "../pages/rooms";
 import { Reservation } from "../pages/Reservation";
 import { Login } from "../pages/Login";
-import { Country } from "../pages/Country";
 import { Signup } from "../pages/Signup";
+import { User } from "../pages/User";
 
 export const Router = () => {
   const location = useLocation();
@@ -39,12 +42,13 @@ export const Router = () => {
         <Route index element={<Home />} />
         <Route path={"/hotels-destinations"} element={<Hotels />} />
         <Route path={"/country/:slug"} element={<Country />} />
-        <Route path={"/city/:slug"} element={<Country />} />
-        <Route path={"/hotel/:slug"} element={<Hotels />} />
+        <Route path={"/city/:slug"} element={<City />} />
+        <Route path={"/hotel/:slug"} element={<Hotel />} />
         <Route path={"/rooms"} element={<Rooms />} />
         <Route path={"/reservation"} element={<Reservation />} />
         <Route path={"/login"} element={<Login />} />
         <Route path={"/signup"} element={<Signup />} />
+        <Route path={"/user"} element={<User />} />
 
         <Route path={"/*"} element={<PageNotFound />} />
       </Route>

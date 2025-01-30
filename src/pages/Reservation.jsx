@@ -9,7 +9,7 @@ export const Reservation = () => {
   const [reservationMessage, setReservationMessage] = useState("");
   const [error, setError] = useState(null);
 
-  const { setUserData } = useContext(UserContext);
+  const { userData } = useContext(UserContext);
 
   const {
     register,
@@ -19,24 +19,20 @@ export const Reservation = () => {
 
   const onSubmit = (data) => {
     let urlencoded = new URLSearchParams();
-    urlencoded.append("user_id", UserData?.user_id);
-    urlencoded.append("hotel_id", data.hotel - id);
-    urlencoded.append("room_id", data.room - id);
-    urlencoded.append("is_flex", data.isFlex);
-    urlencoded.append("num_persons", data.amount - people);
-    urlencoded.append(
-      "checkin",
-      "Sun Jan 26 2025 23:39:21 GMT+0000 (Coordinated Universal Time)"
-    );
-    urlencoded.append(
-      "checkout",
-      "Tue Apr 22 2025 15:58:37 GMT+0000 (Coordinated Universal Time)"
-    );
+    urlencoded.append("user_id", userData?.user.id || "");
+    urlencoded.append("hotel_id", data.destination_hotel);
+    urlencoded.append("room_id", data.room_type);
+    urlencoded.append("is_flex", data.is_flex);
+    urlencoded.append("checkin", data.checkin_date);
+    urlencoded.append("checkout", data.checkout_date);
     urlencoded.append("firstname", data.firstname);
     urlencoded.append("lastname", data.lastname);
     urlencoded.append("email", data.email);
     urlencoded.append("phone", data.phonenumber);
     urlencoded.append("comment", data.comment);
+
+    console.log(data);
+    console.log("Encoded Data:", urlencoded.toString());
 
     const options = {
       method: "POST",
@@ -65,51 +61,71 @@ export const Reservation = () => {
           Udfyld nedenstående formular for at reservere et af vores værelser.
         </p>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <select {...register("destination-hotel")}>
+          <select {...register("destination_hotel")}>
             <option value="Vælg destination & hotel">
               Vælg destination & hotel
             </option>
           </select>
           <div className={s.flexrow}>
-            <select {...register("room-type")}>
+            <select {...register("room_type")}>
               <option value="Vælg værelsestype">Vælg værelsestype</option>
             </select>
-            <select {...register("amount-people")}>
+            <select {...register("amount_people")}>
               <option value="Vælg antal personer">Vælg antal personer</option>
             </select>
           </div>
           <p>Vælg prisklasse:</p>
           <div className={s.flexrow}>
             <input
-              {...register("price")}
+              {...register("is_flex")}
               type="radio"
-              value="Normal"
+              value="0"
               id="price-normal"
             />{" "}
             <label htmlFor="price-normal">Normal</label>
           </div>
           <div className={s.flexrow}>
             <input
-              {...register("price")}
+              {...register("is_flex")}
               type="radio"
-              value="Flex"
+              value="1"
               id="price-flex"
             />{" "}
             <label htmlFor="price-flex">Flex</label>
           </div>
           <div className={s.flexrow}>
-            <input type="date" placeholder="checkin-date" {...register} />
-            <input type="date" placeholder="checkout-date" {...register} />
+            <input
+              type="date"
+              placeholder="checkin-date"
+              {...register("checkin_date")}
+            />
+            <input
+              type="date"
+              placeholder="checkout-date"
+              {...register("checkout_date")}
+            />
           </div>
-          <input type="text" placeholder="Fornavn" {...register} />
-          <input type="text" placeholder="Efternavn(e)" {...register} />
+          <input type="text" placeholder="Fornavn" {...register("firstname")} />
+          <input
+            type="text"
+            placeholder="Efternavn(e)"
+            {...register("lastname")}
+          />
           <div className={s.flexrow}>
-            <input type="email" placeholder="Email" {...register} />
-            <input type="tel" placeholder="Telefon" {...register} />
+            <input type="email" placeholder="Email" {...register("email")} />
+            <input
+              type="tel"
+              placeholder="Telefon"
+              {...register("phonenumber")}
+            />
           </div>
-          <textarea {...register} placeholder="Kommentarer" />
+          <textarea {...register("comment")} placeholder="Kommentarer" />
           <div className={s.flexrow}>
-            <input type="checkbox" id="accept-terms" {...register} />{" "}
+            <input
+              type="checkbox"
+              id="accept-terms"
+              {...register("accept_terms", { required: true })}
+            />
             <label htmlFor="accept-terms">
               Jeg accepterer hermed Overlooks betingelser (sæt kryds)
             </label>
