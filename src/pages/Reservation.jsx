@@ -4,6 +4,7 @@ import { UserContext } from "../context/UserContext";
 import { Main } from "../components/Main/Main";
 import { Section } from "../components/Section/Section";
 import s from "../style/pages/Reservation.module.scss";
+import { hotels } from "../data/hotels";
 
 export const Reservation = () => {
   const [reservationMessage, setReservationMessage] = useState("");
@@ -21,7 +22,8 @@ export const Reservation = () => {
     let urlencoded = new URLSearchParams();
     urlencoded.append("user_id", userData?.user.id || "");
     urlencoded.append("hotel_id", data.destination_hotel);
-    urlencoded.append("room_id", data.room_type);
+    urlencoded.append("room_id", 1);
+    urlencoded.append("num_persons", 5);
     urlencoded.append("is_flex", data.is_flex);
     urlencoded.append("checkin", data.checkin_date);
     urlencoded.append("checkout", data.checkout_date);
@@ -65,7 +67,29 @@ export const Reservation = () => {
             <option value="Vælg destination & hotel">
               Vælg destination & hotel
             </option>
+
+            {hotels?.map((country, countryIndex) => {
+              return (
+                <optgroup key={countryIndex} label={country.country}>
+                  {country.cities.map((city, cityIndex) => {
+                    return (
+                      <>
+                        <option key={`city-${cityIndex}`} disabled>
+                          {city.name}
+                        </option>
+                        {city.hotels.map((hotel, hotelIndex) => (
+                          <option key={hotelIndex} value={hotel.id}>
+                            {hotel.name}
+                          </option>
+                        ))}
+                      </>
+                    );
+                  })}
+                </optgroup>
+              );
+            })}
           </select>
+
           <div className={s.flexrow}>
             <select {...register("room_type")}>
               <option value="Vælg værelsestype">Vælg værelsestype</option>
